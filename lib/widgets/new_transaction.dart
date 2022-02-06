@@ -42,7 +42,7 @@ class NewTransaction extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
-            child: ElevatedButton(
+            child: TextButton(
                 onPressed: () => submitData(),
                 child: const Text(
                   'Add',
