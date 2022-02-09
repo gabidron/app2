@@ -11,8 +11,17 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: transactions.map((tx) {
-      return TransactionCard(transaction: tx);
-    }).toList());
+        children: transactions.isEmpty
+            ? [
+                const Text('Add a new transqaction'),
+                const SizedBox(height: 20),
+                SizedBox(
+                  height: 400,
+                  child: Image.asset('assets/images/waiting.png'),
+                ),
+              ]
+            : transactions.map((tx) {
+                return TransactionCard(transaction: tx);
+              }).toList());
   }
 }

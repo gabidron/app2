@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange)
             .copyWith(secondary: Colors.orangeAccent),
+        fontFamily: 'Quicksand',
       ),
       home: const MyHomePage(),
     );
@@ -34,18 +35,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: '1',
-      date: DateTime.now(),
-      price: 25.01,
-      title: 'random staff 1',
-    ),
-    Transaction(
-      id: '2',
-      date: DateTime.now(),
-      price: 25.01,
-      title: 'random staaaff 2',
-    ),
+    // Transaction(
+    //   id: '1',
+    //   date: DateTime.now(),
+    //   price: 25.01,
+    //   title: 'random staff 1',
+    // ),
+    // Transaction(
+    //   id: '2',
+    //   date: DateTime.now(),
+    //   price: 25.01,
+    //   title: 'random staaaff 2',
+    // ),
   ];
   void _addTransaction(String title, double amount) {
     final newTransaction = Transaction(
@@ -75,7 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('widget.title'),
+        title: const Text(
+          'My app title',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             onPressed: () => _startAddnewTransaction(context),
