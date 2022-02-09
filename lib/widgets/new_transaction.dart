@@ -48,17 +48,33 @@ class _NewTransactionState extends State<NewTransaction> {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onSubmitted: (_) => submitData(),
           ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              const Text('No date selected'),
+              TextButton(
+                  onPressed: null,
+                  child: Text(
+                    'Select date:',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ))
+            ],
+          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
-            child: TextButton(
-                onPressed: () => submitData(),
-                child: const Text(
-                  'Add',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
+            child: ElevatedButton(
+              onPressed: () => submitData(),
+              child: const Text(
+                'Add',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ],
       ),
