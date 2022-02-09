@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTransaction;
@@ -11,20 +12,32 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
 
-  final amountController = TextEditingController();
+  final _amountController = TextEditingController();
+  var _selectedDate;
+  void _presentDatePicker(BuildContext context) {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      if (value != null) setState(() => _selectedDate = value);
+    });
+  }
 
   void submitData() {
-    String inputText = titleController.text;
-    double amount = double.parse(amountController.text);
+    String inputText = _titleController.text;
+    double amount = double.parse(_amountController.text);
 
-    if (inputText.isEmpty || amount <= 0) {
+    if (inputText.isEmpty || amount <= 0 || _selectedDate == null) {
       return;
     } else {
       widget.addTransaction(
-        titleController.text,
-        double.parse(amountController.text),
+        _titleController.text,
+        double.parse(_amountController.text),
+        _selectedDate,
       );
       Navigator.of(context).pop();
     }
@@ -39,12 +52,12 @@ class _NewTransactionState extends State<NewTransaction> {
         children: [
           TextField(
             decoration: const InputDecoration(label: Text('Title')),
-            controller: titleController,
+            controller: _titleController,
             onSubmitted: (_) => submitData(),
           ),
           TextField(
             decoration: const InputDecoration(label: Text('Amount')),
-            controller: amountController,
+            controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onSubmitted: (_) => submitData(),
           ),
@@ -53,9 +66,13 @@ class _NewTransactionState extends State<NewTransaction> {
           ),
           Row(
             children: [
-              const Text('No date selected'),
+              Text(
+                _selectedDate == null
+                    ? 'No date selected'
+                    : DateFormat('dd.MM.yyyy').format(_selectedDate),
+              ),
               TextButton(
-                  onPressed: null,
+                  onPressed: () => _presentDatePicker(context),
                   child: Text(
                     'Select date:',
                     style:
