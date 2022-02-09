@@ -1,8 +1,9 @@
-import 'package:app2/widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 
 import './widgets/transactions_list.dart';
 import './models/transaction.dart';
+import './widgets/chart.dart';
+import 'widgets/new_transaction.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange)
-            .copyWith(secondary: Colors.orangeAccent),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+            .copyWith(secondary: Colors.purpleAccent),
         fontFamily: 'Quicksand',
       ),
       home: const MyHomePage(),
@@ -34,20 +35,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: '1',
-    //   date: DateTime.now(),
-    //   price: 25.01,
-    //   title: 'random staff 1',
-    // ),
-    // Transaction(
-    //   id: '2',
-    //   date: DateTime.now(),
-    //   price: 25.01,
-    //   title: 'random staaaff 2',
-    // ),
-  ];
+  final List<Transaction> _userTransactions = [];
+  List<Transaction> get _recentTransaction {
+    return (_userTransactions.where((element) {
+      return element.date.isAfter(
+        DateTime.now()
+        .subtract(
+        const Duration(days: 7),
+        )
+        ,);
+    }).toList());
+  }
+
   void _addTransaction(String title, double amount) {
     final newTransaction = Transaction(
       id: DateTime.now().toString(),
@@ -91,9 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              child: Text('carousel'),
-            ),
+            Chart(recentTransactions: _recentTransaction),
             TransactionList(transactions: _userTransactions),
           ],
         ),
