@@ -50,9 +50,9 @@ class TransactionCard extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () => deleteTransaction(transaction.id),
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Colors.red,
                 ))
           ],
         ))
