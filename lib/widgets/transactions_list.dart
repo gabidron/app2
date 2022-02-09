@@ -5,7 +5,9 @@ import 'transaction_card.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  const TransactionList({Key? key, required this.transactions})
+  Function deleteTransaction;
+  TransactionList(
+      {Key? key, required this.transactions, required this.deleteTransaction})
       : super(key: key);
 
   @override
@@ -21,7 +23,10 @@ class TransactionList extends StatelessWidget {
                 ),
               ]
             : transactions.map((tx) {
-                return TransactionCard(transaction: tx);
+                return TransactionCard(
+                  transaction: tx,
+                  deleteTransaction: deleteTransaction,
+                );
               }).toList());
   }
 }

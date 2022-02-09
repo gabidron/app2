@@ -4,8 +4,12 @@ import 'package:intl/intl.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
-  const TransactionCard({Key? key, required this.transaction})
-      : super(key: key);
+  final Function deleteTransaction;
+  const TransactionCard({
+    Key? key,
+    required this.transaction,
+    required this.deleteTransaction,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,7 +24,7 @@ class TransactionCard extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
@@ -39,7 +43,19 @@ class TransactionCard extends StatelessWidget {
               style: const TextStyle(color: Colors.grey),
             ),
           ],
-        )
+        ),
+        Expanded(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+                onPressed: () => deleteTransaction(transaction.id),
+                icon: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).colorScheme.primary,
+                ))
+          ],
+        ))
       ]),
     );
   }
